@@ -1,8 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import ProductCard from './components/ProductCard';
-import productmock
-  from './productmock.json'; // Make sure to adjust the path based on your project structure
+import ProductCard from "./components/ProductCard";
+import productmock from "./productmock.json"; // Make sure to adjust the path based on your project structure
 
 const App: React.FC = () => {
   return (

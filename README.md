@@ -6,13 +6,12 @@ Create this component yourself in a Codepen or similar.
 
 # Specs
 
-Minus button decreases the quantity.
-Plus button increases the quantity.
-Max quantity is 13. Min quantity is 1. User should not be able to go outside these values.
-
-When at min or max, corresponding button should not work.
-
-Use your intuition on UX to make it look good visually. Buttons should be interactive when used. Do not use the example's style, do feel free to use whatever visual style you like.
+- Minus button decreases the quantity.
+- Plus button increases the quantity.
+- Max quantity is 13. Min quantity is 1. User should not be able to go outside these values.
+- When at min or max, corresponding button should not work.
+- Use your intuition on UX to make it look good visually. Buttons should be interactive when used. Do not use the  
+  example's style, do feel free to use whatever visual style you like.
 
 When the quantity adjuster changes value, simulate it making a request to an endpoint by writing the value to the HTML of the page. To avoid making a lot of requests on successive adjustments, debounce this behaviour. Use your discretion to decide how and what an appropriate interval is.
 
@@ -24,7 +23,8 @@ Use any frameworks you wish, but do not use a premade component.
 
 A link to the quantity adjuster is provided
 All Specs are satisfied
-The initial value of the quantity adjuster is 6
+
+- The initial value of the quantity adjuster is 6
 
 # Getting Started with Create React App
 
