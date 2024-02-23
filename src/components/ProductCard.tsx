@@ -2,19 +2,21 @@ import React, { ChangeEvent, useState } from "react";
 
 import {
   AddCircleOutlineTwoTone,
-  RemoveCircleOutlineTwoTone,
+  RemoveCircleOutline,
 } from "@mui/icons-material";
 import {
   Box,
-  CardContent,
+  Button,
+  ButtonGroup,
   CardMedia,
   Container,
+  Divider,
   Grid,
-  IconButton,
   MenuItem,
   Select,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 
 import ProductCardProps from "./product";
@@ -50,84 +52,141 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     }
   };
 
+  const isMobile = useMediaQuery("(max-width:920px)");
+
   return (
-    <Container sx={{ height: "100vh" }}>
-      <Grid container>
-        <Grid item xs={12} md={6}>
-          {/* Images collage on the left */}
-          <Grid container spacing={1}>
-            {product.images.map((image, index) => (
-              <Grid item key={index} xs={6} md={4} lg={6}>
-                <CardMedia
-                  component="img"
-                  alt={`Product ${index + 1}`}
-                  width="200"
-                  image={image.src}
-                />
-              </Grid>
-            ))}
-          </Grid>
+    <Container maxWidth={"lg"}>
+      <Grid container mt={2} spacing={2}>
+        {/* Product images on the left */}
+        <Grid
+          item
+          xs={12}
+          md={5}
+          sx={{
+            display: isMobile ? "ruby" : "-webkit-inline-box",
+            justifyContent: "center",
+            alignItems: "center",
+            overflowX: "auto",
+            flexDirection: "row",
+            writingMode: "vertical-lr",
+            position: "relative",
+            flexWrap: "nowrap",
+            p: 0,
+            m: 0,
+          }}
+        >
+          {product.images.map((image, index) => (
+            <Box
+              pt={0}
+              key={index}
+              sx={{
+                flex: isMobile ? "0 0 auto" : "1 1 auto",
+                maxHeight: "600px",
+              }}
+            >
+              <CardMedia
+                component="img"
+                sx={{
+                  objectFit: "contain",
+                  mr: isMobile ? 1 : 0,
+                  mb: isMobile ? 0 : 1,
+                  borderRadius: 5,
+                  p: 0,
+                  height: "100%",
+                }}
+                alt={`Product ${index + 1}`}
+                image={image.src}
+              />
+            </Box>
+          ))}
         </Grid>
-        <Grid container xs={12} md={6}>
-          {/* Product details on the right */}
-          <CardContent sx={{ position: "fixed" }}>
-            <Grid container gap={2}>
-              <Grid xs={12} item>
-                <Typography variant="h5" component="div">
-                  {product.title}
-                </Typography>
-              </Grid>
-              <Grid xs={12} item>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  dangerouslySetInnerHTML={{ __html: product.body_html }}
-                />
-              </Grid>
-              <Grid xs={12} item>
-                <Typography variant="h6" color="text.primary">
-                  ${product.variants[0].price}
-                </Typography>
-              </Grid>
-              <Grid xs={12} item>
-                <Select
-                  value={selectedSize}
-                  onChange={handleSizeChange}
-                  fullWidth
-                >
-                  {product.options[0].values.map((size) => (
-                    <MenuItem key={size} value={size}>
-                      {size}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Grid>
-              <Grid xs={12} item>
-                <Box>
-                  <IconButton
-                    onClick={handleDecrement}
-                    aria-label="Decrease Quantity"
-                    disabled={quantity === 1}
+
+        {/* Product details on the right */}
+
+        <Grid
+          item
+          xs={12}
+          md={5}
+          sx={{
+            position: isMobile ? "initial" : "fixed",
+            right: isMobile ? "0" : "10%",
+          }}
+        >
+          <Grid xs={12} item>
+            <Typography variant="h5" component="div">
+              {product.title}
+            </Typography>
+          </Grid>
+          <Grid xs={12} item>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              textAlign="justify"
+              dangerouslySetInnerHTML={{ __html: product.body_html }}
+            />
+          </Grid>
+          <Grid xs={12} item>
+            <Typography variant="h6" color="text.primary">
+              ${product.variants[0].price}
+            </Typography>
+          </Grid>
+          <Grid xs={12} item>
+            <ButtonGroup disabled={false} sx={{ textAlign: "center" }}>
+              <Select
+                sx={{ display: "flex", minWidth: "10rem" }}
+                value={selectedSize}
+                onChange={handleSizeChange}
+              >
+                {product.options[0].values.map((size) => (
+                  <MenuItem
+                    sx={{ textAlign: "center", display: "flex" }}
+                    key={size}
+                    value={size}
                   >
-                    <RemoveCircleOutlineTwoTone />
-                  </IconButton>
-                  <TextField
-                    type="number"
-                    label="Quantity"
-                    value={quantity}
-                    onChange={handleQuantityChange}
-                  />
-                  <IconButton
-                    onClick={handleIncrement}
-                    aria-label="Increase Quantity"
-                    disabled={quantity === 13}
-                  >
-                    <AddCircleOutlineTwoTone />
-                  </IconButton>
-                </Box>
-              </Grid>
-            </Grid>
-          </CardContent>
+                    {size}
+                  </MenuItem>
+                ))}
+              </Select>
+
+              <Divider orientation="vertical" flexItem sx={{ mx: 4 }} />
+
+              <Button
+                onClick={handleDecrement}
+                aria-label="-1"
+                variant="text"
+                color="inherit"
+                size="small"
+                disabled={quantity <= 1}
+                sx={{ verticalAlign: "middle" }}
+                startIcon={<RemoveCircleOutline />}
+              ></Button>
+              <TextField
+                value={quantity}
+                size="small"
+                variant="standard"
+                InputProps={{
+                  readOnly: true,
+                }}
+                sx={{
+                  textAlign: "center",
+                  justifyContent: "center",
+                  width: "20px",
+                }}
+                onChange={handleQuantityChange}
+              />
+
+              <Button
+                onClick={handleIncrement}
+                aria-label="+1"
+                variant="text"
+                color="inherit"
+                size="small"
+                disabled={quantity >= 13}
+                sx={{ verticalAlign: "middle" }}
+                endIcon={<AddCircleOutlineTwoTone />}
+              ></Button>
+            </ButtonGroup>
+          </Grid>
         </Grid>
       </Grid>
     </Container>
