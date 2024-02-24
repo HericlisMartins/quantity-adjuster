@@ -1,3 +1,12 @@
+[Preview]
+https://quantity-adjuster.vercel.app/
+
+[Repo]
+https://github.com/HericlisMartins/quantity-adjuster
+
+[Stackblitz]
+https://stackblitz.com/~/github.com/HericlisMartins/quantity-adjuster
+
 # Overview
 
 A quantity adjuster is a UI component featuring a number that can be adjusted up and down with buttons on either side. An example of where this would appear is in an ecommerce cart.
@@ -15,7 +24,7 @@ Create this component yourself in a Codepen or similar.
 
 - When the quantity adjuster changes value, simulate it making a request to an endpoint by writing the value to the HTML of the page. To avoid making a lot of requests on successive adjustments, debounce this behaviour. Use your discretion to decide how and what an appropriate interval is.
 
-Consider accessibility.
+- Consider accessibility.
 
 - Use any frameworks you wish, but do not use a premade component.
 
