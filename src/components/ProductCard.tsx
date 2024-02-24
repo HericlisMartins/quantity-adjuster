@@ -56,7 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <Container maxWidth={"lg"}>
-      <Grid container mt={2} spacing={2}>
+      <Grid container mt={10} spacing={2}>
         {/* Product images on the left */}
         <Grid
           item
@@ -82,16 +82,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               sx={{
                 flex: isMobile ? "0 0 auto" : "1 1 auto",
                 maxHeight: "600px",
+                mr: isMobile ? 1 : 0,
+                mb: isMobile ? 0 : 1,
               }}
             >
               <CardMedia
                 component="img"
                 sx={{
                   objectFit: "contain",
-                  mr: isMobile ? 1 : 0,
-                  mb: isMobile ? 0 : 1,
                   borderRadius: 5,
                   p: 0,
+                  m: 0,
                   height: "100%",
                 }}
                 alt={`Product ${index + 1}`}
@@ -109,7 +110,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           md={5}
           sx={{
             position: isMobile ? "initial" : "fixed",
-            right: isMobile ? "0" : "10%",
+            right: isMobile ? "0" : "15%",
           }}
         >
           <Grid xs={12} item>
@@ -125,21 +126,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               dangerouslySetInnerHTML={{ __html: product.body_html }}
             />
           </Grid>
+          <Divider sx={{ my: 2 }} />
           <Grid xs={12} item>
             <Typography variant="h6" color="text.primary">
               ${product.variants[0].price}
             </Typography>
           </Grid>
-          <Grid xs={12} item>
+          <Grid xs={12} item mt={2}>
             <ButtonGroup disabled={false} sx={{ textAlign: "center" }}>
               <Select
-                sx={{ display: "flex", minWidth: "10rem" }}
+                sx={{ display: "flex", minWidth: "8rem" }}
                 value={selectedSize}
                 onChange={handleSizeChange}
               >
                 {product.options[0].values.map((size) => (
                   <MenuItem
-                    sx={{ textAlign: "center", display: "flex" }}
+                    sx={{ textAlign: "center", display: "block" }}
                     key={size}
                     value={size}
                   >
@@ -174,7 +176,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 }}
                 onChange={handleQuantityChange}
               />
-
               <Button
                 onClick={handleIncrement}
                 aria-label="+1"
