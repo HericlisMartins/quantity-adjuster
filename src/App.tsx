@@ -28,7 +28,7 @@ function Copyright() {
 
 const App: React.FC = () => {
   return (
-    <div>
+    <Container maxWidth="lg">
       <AppBar position="fixed">
         <Toolbar sx={{ justifyContent: "center" }}>
           <Box p={2} textAlign={"center"}>
@@ -42,17 +42,15 @@ const App: React.FC = () => {
         sx={{ bgcolor: "#000", py: 6, color: "white" }}
         mt={10}
       >
-        <Container maxWidth="lg">
-          <Typography variant="h6" align="center" gutterBottom>
-            <Logo />
-          </Typography>
-          <Typography variant="subtitle1" align="center" component="p">
-            Quantity Adjuster
-          </Typography>
-          <Copyright />
-        </Container>
+        <Typography variant="h6" align="center" gutterBottom>
+          <Logo />
+        </Typography>
+        <Typography variant="subtitle1" align="center" component="p">
+          Quantity Adjuster
+        </Typography>
+        <Copyright />
       </Box>
-    </div>
+    </Container>
   );
 };
 

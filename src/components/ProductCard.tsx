@@ -1,15 +1,16 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import {
   AddCircleOutlineTwoTone,
   RemoveCircleOutline,
+  ShoppingBagOutlined,
 } from "@mui/icons-material";
 import {
+  Alert,
   Box,
   Button,
   ButtonGroup,
   CardMedia,
-  Container,
   Divider,
   Grid,
   MenuItem,
@@ -22,10 +23,13 @@ import {
 import ProductCardProps from "./product";
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const [quantity, setQuantity] = useState<number>(1);
+  const [quantity, setQuantity] = useState<number>(6);
   const [selectedSize, setSelectedSize] = useState<string>(
     product.options[0].values[0],
   );
+  const [showAlert, setShowAlert] = useState(false);
+  const isMounted = useRef(false);
+  const isMobile = useMediaQuery("(max-width:920px)");
 
   const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(event.target.value, 10) || 0;
@@ -52,10 +56,43 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     }
   };
 
-  const isMobile = useMediaQuery("(max-width:920px)");
+  // Debounce the quantity change with a useEffect and setTimeout
+  useEffect(() => {
+    if (isMounted.current) {
+      setShowAlert(false);
+      const timeoutId = setTimeout(() => {
+        setShowAlert(true);
+      }, 1000);
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    } else {
+      isMounted.current = true;
+    }
+  }, [quantity]);
+
+  useEffect(() => {
+    if (!showAlert) return;
+    const timeoutId = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [showAlert, quantity]);
 
   return (
-    <Container maxWidth={"lg"}>
+    <Box>
+      {showAlert && (
+        <Alert
+          severity="success"
+          sx={{ position: "fixed", bottom: 16, right: 16 }}
+          onClose={() => setShowAlert(false)}
+        >
+          Quantity changed: {quantity}
+        </Alert>
+      )}
+
       <Grid container mt={10} spacing={2}>
         {/* Product images on the left */}
         <Grid
@@ -103,7 +140,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </Grid>
 
         {/* Product details on the right */}
-
         <Grid
           item
           xs={12}
@@ -188,9 +224,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               ></Button>
             </ButtonGroup>
           </Grid>
+
+          <Grid xs={12} item mt={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              fullWidth
+              startIcon={<ShoppingBagOutlined />}
+              sx={{ borderRadius: 0 }}
+            >
+              Add to Cart
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
-    </Container>
+    </Box>
   );
 };
 
