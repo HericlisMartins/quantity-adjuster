@@ -98,7 +98,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <Grid
           item
           xs={12}
-          md={5}
+          md={6}
           sx={{
             display: isMobile ? "ruby" : "-webkit-inline-box",
             justifyContent: "center",
@@ -140,103 +140,106 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </Grid>
 
         {/* Product details on the right */}
-        <Grid
-          item
-          xs={12}
-          md={5}
-          sx={{
-            position: isMobile ? "initial" : "fixed",
-            right: isMobile ? "0" : "15%",
-          }}
-        >
-          <Grid xs={12} item>
-            <Typography variant="h5" component="div">
-              {product.title}
-            </Typography>
-          </Grid>
-          <Grid xs={12} item>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              textAlign="justify"
-              dangerouslySetInnerHTML={{ __html: product.body_html }}
-            />
-          </Grid>
-          <Divider sx={{ my: 2 }} />
-          <Grid xs={12} item>
-            <Typography variant="h6" color="text.primary">
-              ${product.variants[0].price}
-            </Typography>
-          </Grid>
-          <Grid xs={12} item mt={2}>
-            <ButtonGroup disabled={false} sx={{ textAlign: "center" }}>
-              <Select
-                sx={{ display: "flex", minWidth: "8rem" }}
-                value={selectedSize}
-                onChange={handleSizeChange}
-              >
-                {product.options[0].values.map((size) => (
-                  <MenuItem
-                    sx={{ textAlign: "center", display: "block" }}
-                    key={size}
-                    value={size}
-                  >
-                    {size}
-                  </MenuItem>
-                ))}
-              </Select>
-
-              <Divider orientation="vertical" flexItem sx={{ mx: 4 }} />
-
-              <Button
-                onClick={handleDecrement}
-                aria-label="-1"
-                variant="text"
-                color="inherit"
-                size="small"
-                disabled={quantity <= 1}
-                sx={{ verticalAlign: "middle" }}
-                startIcon={<RemoveCircleOutline />}
-              ></Button>
-              <TextField
-                value={quantity}
-                size="small"
-                variant="standard"
-                InputProps={{
-                  readOnly: true,
-                }}
-                sx={{
-                  textAlign: "center",
-                  justifyContent: "center",
-                  width: "20px",
-                }}
-                onChange={handleQuantityChange}
+        <Grid item xs={12} md={6}>
+          <Box
+            sx={{
+              position: isMobile ? "initial" : "fixed",
+              mr: isMobile ? 0 : 10,
+              maxWidth: isMobile ? "100%" : "500px",
+            }}
+          >
+            <Grid xs={12} item>
+              <Typography variant="h5" component="div">
+                {product.title}
+              </Typography>
+            </Grid>
+            <Grid xs={12} item>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                textAlign="justify"
+                dangerouslySetInnerHTML={{ __html: product.body_html }}
               />
-              <Button
-                onClick={handleIncrement}
-                aria-label="+1"
-                variant="text"
-                color="inherit"
-                size="small"
-                disabled={quantity >= 13}
-                sx={{ verticalAlign: "middle" }}
-                endIcon={<AddCircleOutlineTwoTone />}
-              ></Button>
-            </ButtonGroup>
-          </Grid>
+            </Grid>
+            <Divider sx={{ my: 2 }} />
+            <Grid xs={12} item>
+              <Typography variant="h6" color="text.primary">
+                ${product.variants[0].price}
+              </Typography>
+            </Grid>
+            <Grid xs={12} item mt={2}>
+              <ButtonGroup disabled={false} sx={{ textAlign: "center" }}>
+                <Select
+                  sx={{ display: "flex", minWidth: "8rem" }}
+                  value={selectedSize}
+                  onChange={handleSizeChange}
+                >
+                  {product.options[0].values.map((size) => (
+                    <MenuItem
+                      sx={{ textAlign: "center", display: "block" }}
+                      key={size}
+                      value={size}
+                    >
+                      {size}
+                    </MenuItem>
+                  ))}
+                </Select>
 
-          <Grid xs={12} item mt={2}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              fullWidth
-              startIcon={<ShoppingBagOutlined />}
-              sx={{ borderRadius: 0 }}
-            >
-              Add to Cart
-            </Button>
-          </Grid>
+                <Divider orientation="vertical" flexItem sx={{ mx: 4 }} />
+
+                <Button
+                  onClick={handleDecrement}
+                  aria-label="-1"
+                  variant="text"
+                  color="inherit"
+                  size="small"
+                  disabled={quantity <= 1}
+                  sx={{ verticalAlign: "middle" }}
+                  startIcon={<RemoveCircleOutline />}
+                ></Button>
+                <TextField
+                  value={quantity}
+                  size="small"
+                  variant="standard"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  sx={{
+                    textAlign: "center",
+                    justifyContent: "center",
+                    width: "20px",
+                    "& input": {
+                      textAlign: "center",
+                    },
+                  }}
+                  onChange={handleQuantityChange}
+                />
+                <Button
+                  onClick={handleIncrement}
+                  aria-label="+1"
+                  variant="text"
+                  color="inherit"
+                  size="small"
+                  disabled={quantity >= 13}
+                  sx={{ verticalAlign: "middle" }}
+                  endIcon={<AddCircleOutlineTwoTone />}
+                ></Button>
+              </ButtonGroup>
+            </Grid>
+
+            <Grid xs={12} item mt={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                fullWidth
+                startIcon={<ShoppingBagOutlined />}
+                sx={{ borderRadius: 0 }}
+              >
+                Add to Cart
+              </Button>
+            </Grid>
+          </Box>
         </Grid>
       </Grid>
     </Box>

@@ -28,15 +28,17 @@ function Copyright() {
 
 const App: React.FC = () => {
   return (
-    <Container maxWidth="lg">
-      <AppBar position="fixed">
-        <Toolbar sx={{ justifyContent: "center" }}>
-          <Box p={2} textAlign={"center"}>
-            <Logo />
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <ProductCard product={productmock} />
+    <Box>
+      <Container maxWidth="lg">
+        <AppBar position="fixed">
+          <Toolbar sx={{ justifyContent: "center" }}>
+            <Box p={2} textAlign={"center"}>
+              <Logo />
+            </Box>
+          </Toolbar>
+        </AppBar>
+        <ProductCard product={productmock} />
+      </Container>
       <Box
         component="footer"
         sx={{ bgcolor: "#000", py: 6, color: "white" }}
@@ -50,7 +52,7 @@ const App: React.FC = () => {
         </Typography>
         <Copyright />
       </Box>
-    </Container>
+    </Box>
   );
 };
 
